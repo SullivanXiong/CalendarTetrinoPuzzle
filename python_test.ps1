@@ -1,0 +1,1 @@
+python -m unittest discover -s e:\apps\CalenderTetrinoPuzzle\calender_solver\test -p "test_*.py"
