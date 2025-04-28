@@ -37,10 +37,10 @@ class Shape:
 
     def rotate(self):
         """
-        Rotate the shape 90 degrees clockwise.
+        Return a new Shape object rotated 90 degrees clockwise.
         """
-        self.shape = [list(row) for row in zip(*self.shape[::-1])]
-        self.width, self.height = self.height, self.width
+        rotated_shape = [list(row) for row in zip(*self.shape[::-1])]
+        return Shape(self.height, self.width, rotated_shape)
 
     def __repr__(self):
         return f"Shape(width={self.width}, height={self.height}, shape={self.shape})"
@@ -66,7 +66,7 @@ class Tetrino:
         if degrees % 90 != 0:
             raise ValueError("Rotation degrees must be a multiple of 90.")
         for _ in range(degrees // 90):
-            self.shape.rotate()
+            self.shape = self.shape.rotate()
 
     def get_dimensions(self):
         """
