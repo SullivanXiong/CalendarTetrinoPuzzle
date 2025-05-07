@@ -2,7 +2,7 @@ import copy
 
 import dlx
 from tetrino import Shape, Tetrino
-from util import DayOfWeek, Month, get_calender_order
+from util import DayOfWeek, Month, get_calender_order, get_today
 
 
 class CalenderGrid():
@@ -169,8 +169,12 @@ class CalenderSolver():
                             if not valid:
                                 break
 
-                        if valid and len(cells) == expected_cells:
-                            dlx_row = [self.col_index[f"piece_{name}"]] + [self.col_index[f"cell_{r}_{c}"] for (r,c) in cells]
+                        if valid and len(cells) == expected_cells:                            
+                            # A possible iteration of the tetrino in an
+                            # indexed Intermediate Representation form 
+                            dlx_row = [self.col_index[f"piece_{name}"]] + \
+                                [self.col_index[f"cell_{r}_{c}"] for (r,c) in \
+                                    cells]
                             self.rows.append(dlx_row)
                             self.row_metadata.append((name, rotation, cells))
     
@@ -188,15 +192,20 @@ class CalenderSolver():
         for i, row in enumerate(self.rows):
             solver.appendRow(row, i)  # <-- append with label `i`
         
-        solution = next(solver.solve(), None)
+        solutions = solver.solve()
+        
+        # get all unique solutions
+        solutions = set(tuple(sorted(solution)) for solution in solutions)
+        
+        solution = list(solutions)[0]
         print("[DEBUG] Solution rows:", solution)
         if solution is None:
-            return []
+            return [], []
         else:
             solution_rows = []
             for i in solution:
                 solution_rows.append(solver.getRowList(i))
-            return solution_rows
+            return solution_rows, solutions
 
     def apply_solution_to_grid(self, solution_rows):
         """
@@ -229,13 +238,12 @@ class CalenderSolver():
 
 
 if __name__ == "__main__":
-    year = 2025
-    month = Month.APR
-    day = 28
-    day_of_week = DayOfWeek.MON
+    days_forward = int(input("How many days forward? (i.e. 0=today, 1=tomorow, 2=...): "))
+    year, month, day, day_of_week = get_today(days_forward)
+    print("[DEBUG] Today's date:", year, month, day, day_of_week)
 
     solver = CalenderSolver(year, month, day, day_of_week)
-    solution = solver.solve_exact_cover()
+    solution, all_possible_solutions = solver.solve_exact_cover()
     print("[DEBUG] Solution:", solution)
     if solution:
         grid = solver.apply_solution_to_grid(solution)
@@ -243,3 +251,4 @@ if __name__ == "__main__":
             print(" ".join(str(cell).ljust(4) for cell in row))
     else:
         print("No solution found.")
+        
