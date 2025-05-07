@@ -1,7 +1,6 @@
 import unittest
 
-from calender_solver.calender_solver.tetrino import (InvalidShapeError, Shape,
-                                                     Tetrino)
+from calendar_solver.calendar_solver.tetrino import InvalidShapeError, Shape, Tetrino
 
 
 class TestTetrino(unittest.TestCase):

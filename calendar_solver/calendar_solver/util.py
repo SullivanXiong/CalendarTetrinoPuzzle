@@ -42,6 +42,12 @@ def get_calender_order():
     """
     return calender_order
 
+def format_month(month: int) -> Month:
+    return Month(month)
+
+def format_day_of_week(weekday: int) -> DayOfWeek:
+    return DayOfWeek((weekday + 1) % 7)
+
 def get_today(days_forward: int = 0):
     """
     Get today's date.
@@ -57,7 +63,7 @@ def get_today(days_forward: int = 0):
     _day_of_week = today.weekday()  # Monday is 0 and Sunday is 6
     
     # Convert enums
-    day_of_week = DayOfWeek((_day_of_week + 1) % 7)
-    month = Month(_month)
+    day_of_week = format_day_of_week(_day_of_week)
+    month = format_month(_month)
     
     return year, month, day, day_of_week

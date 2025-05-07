@@ -3,8 +3,8 @@ from copy import deepcopy
 
 import dlx
 import pandas as pd
-from tetrino import Shape, Tetrino
-from util import get_calender_order
+from calendar_solver.calendar_solver.tetrino import Shape, Tetrino
+from calendar_solver.calendar_solver.util import get_calender_order
 
 # Define the grid size and cutouts
 rows, cols = 8, 7

@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+package calendartetrino;
+
+service TetrinoSolver {
+  rpc SolvePuzzle (PuzzleRequest) returns (PuzzleSolution);
+  rpc SolvePuzzleAllSolutions (PuzzleRequest) returns (PuzzleSolutions);
+}
+
+message PuzzleRequest {
+    google.protobuf.Timestamp date = 1;
+}
+
+message PuzzleSolution {
+  repeated Piece solution_pieces = 1;
+}
+
+message PuzzleSolutions {
+    repeated PuzzleSolution solutions = 1;
+}
+
+message Piece {
+  string tetrino_name = 1;
+  repeated Cell cells = 2;
+}
+
+message Cell {
+  string row = 1;
+  string col = 2;
+}

@@ -1,8 +1,8 @@
 import copy
 
 import dlx
-from tetrino import Shape, Tetrino
-from util import DayOfWeek, Month, get_calender_order, get_today
+from calendar_solver.calendar_solver.tetrino import Shape, Tetrino
+from calendar_solver.calendar_solver.util import DayOfWeek, Month, get_calender_order, get_today
 
 
 class CalenderGrid():
@@ -146,7 +146,7 @@ class CalenderSolver():
                 shape_matrix = rotated_tetrino.shape.shape
                 expected_cells = sum(cell for row in shape_matrix for cell in row)
                     
-                print(f"[DEBUG] {name} rotation {rotation}: {shape_matrix}")
+                # print(f"[DEBUG] {name} rotation {rotation}: {shape_matrix}")
 
                 for row in range(grid.rows):
                     for col in range(grid.cols):
@@ -198,14 +198,18 @@ class CalenderSolver():
         solutions = set(tuple(sorted(solution)) for solution in solutions)
         
         solution = list(solutions)[0]
-        print("[DEBUG] Solution rows:", solution)
+        # print("[DEBUG] Solution rows:", solution)
         if solution is None:
             return [], []
         else:
-            solution_rows = []
-            for i in solution:
-                solution_rows.append(solver.getRowList(i))
-            return solution_rows, solutions
+            all_solutions = []
+            for solution in solutions:
+                solution_rows = []
+                for i in solution:
+                    solution_rows.append(set(solver.getRowList(i)))
+                if solution_rows not in all_solutions:
+                    all_solutions.append(solution_rows)
+            return solution_rows, all_solutions
 
     def apply_solution_to_grid(self, solution_rows):
         """
@@ -240,15 +244,16 @@ class CalenderSolver():
 if __name__ == "__main__":
     days_forward = int(input("How many days forward? (i.e. 0=today, 1=tomorow, 2=...): "))
     year, month, day, day_of_week = get_today(days_forward)
-    print("[DEBUG] Today's date:", year, month, day, day_of_week)
+    # print("[DEBUG] Today's date:", year, month, day, day_of_week)
 
     solver = CalenderSolver(year, month, day, day_of_week)
     solution, all_possible_solutions = solver.solve_exact_cover()
-    print("[DEBUG] Solution:", solution)
+    # print("[DEBUG] Solution:", solution)
+    print("[DEBUG] All possible solutions:", len(all_possible_solutions))
     if solution:
         grid = solver.apply_solution_to_grid(solution)
-        for row in grid:
-            print(" ".join(str(cell).ljust(4) for cell in row))
+        # for row in grid:
+            # print(" ".join(str(cell).ljust(4) for cell in row))
     else:
         print("No solution found.")
         

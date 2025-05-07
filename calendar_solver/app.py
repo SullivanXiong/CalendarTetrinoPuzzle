@@ -1,0 +1,3 @@
+import generated.calendar_tetrino_pb2 as calendar_tetrino_pb2
+
+print(calendar_tetrino_pb2)
