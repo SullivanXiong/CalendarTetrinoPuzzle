@@ -5,8 +5,10 @@ import grpc
 
 import calendar_solver.generated.calendar_tetrino_pb2 as calendar_tetrino_pb2
 import calendar_solver.generated.calendar_tetrino_pb2_grpc as calendar_tetrino_pb2_grpc
-from calendar_solver.calendar_solver.calendar_solver import CalenderSolver  # your logic here
-from calendar_solver.calendar_solver.util import format_day_of_week, format_month
+from calendar_solver.calendar_solver.calendar_solver import \
+    CalenderSolver  # your logic here
+from calendar_solver.calendar_solver.util import (format_day_of_week,
+                                                  format_month)
 
 
 class TetrinoSolverServicer(calendar_tetrino_pb2_grpc.TetrinoSolverServicer):
@@ -14,7 +16,7 @@ class TetrinoSolverServicer(calendar_tetrino_pb2_grpc.TetrinoSolverServicer):
         date = request.date.ToDatetime()  # Convert protobuf Timestamp to datetime.datetime
 
         solver = CalenderSolver(date.year, format_month(date.month), date.day, format_day_of_week(date.weekday()))
-        solution, _ = solver.solve_exact_cover()
+        solution, _ = solver.solve_exact_cover(first_solution_only=True)
 
         return self._build_placement(solution)
 
@@ -64,5 +66,7 @@ def serve():
     server.wait_for_termination()
 
 
+if __name__ == "__main__":
+    serve()
 if __name__ == "__main__":
     serve()

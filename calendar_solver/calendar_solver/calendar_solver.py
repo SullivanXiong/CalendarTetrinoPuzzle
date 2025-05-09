@@ -1,8 +1,11 @@
 import copy
 
 import dlx
+
 from calendar_solver.calendar_solver.tetrino import Shape, Tetrino
-from calendar_solver.calendar_solver.util import DayOfWeek, Month, get_calender_order, get_today
+from calendar_solver.calendar_solver.util import (DayOfWeek, Month,
+                                                  get_calender_order,
+                                                  get_today)
 
 
 class CalenderGrid():
@@ -178,9 +181,11 @@ class CalenderSolver():
                             self.rows.append(dlx_row)
                             self.row_metadata.append((name, rotation, cells))
     
-    def solve_exact_cover(self):
+    def solve_exact_cover(self, first_solution_only=False):
         """ Solve the exact cover problem using the DLX algorithm.
             :return: The solution to the exact cover problem.
+            
+            :param first_solution_only: If True, return only the first solution.
         """
         # print("[DEBUG] DLX columns:", self.columns)
         # # print("[DEBUG] DLX column index:", self.col_index)
@@ -192,7 +197,11 @@ class CalenderSolver():
         for i, row in enumerate(self.rows):
             solver.appendRow(row, i)  # <-- append with label `i`
         
-        solutions = solver.solve()
+        if first_solution_only:
+            solution = next(solver.solve(), None)
+            return self._format_solution(solver, solution) if solution else [], []
+        else:
+            solutions = solver.solve()
         
         # get all unique solutions
         solutions = set(tuple(sorted(solution)) for solution in solutions)
@@ -204,9 +213,7 @@ class CalenderSolver():
         else:
             all_solutions = []
             for solution in solutions:
-                solution_rows = []
-                for i in solution:
-                    solution_rows.append(set(solver.getRowList(i)))
+                solution_rows = self._format_solution(solver, solution)
                 if solution_rows not in all_solutions:
                     all_solutions.append(solution_rows)
             return solution_rows, all_solutions
@@ -239,7 +246,20 @@ class CalenderSolver():
                 self.calender_grid.grid[r][c] = piece
 
         return self.calender_grid.grid
-
+    
+    def _format_solution(self, solver, solution):
+        """ Format the solution to be more readable.
+        
+            :param solver: The DLX solver to use.
+            :param solution: The solution to format.
+            :return: The formatted solution.
+        """
+        _solutions = []
+        for i in solution:
+            _solutions.append(set(solver.getRowList(i)))
+            
+        return _solutions
+        
 
 if __name__ == "__main__":
     days_forward = int(input("How many days forward? (i.e. 0=today, 1=tomorow, 2=...): "))
