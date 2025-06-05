@@ -1,9 +1,9 @@
 syntax = "proto3";
 
 import "google/protobuf/timestamp.proto";
-package calendartetrino;
+package calendartetromino;
 
-service TetrinoSolver {
+service tetrominoSolver {
   rpc SolvePuzzle (PuzzleRequest) returns (PuzzleSolution);
   rpc SolvePuzzleAllSolutions (PuzzleRequest) returns (PuzzleSolutions);
 }
@@ -21,7 +21,7 @@ message PuzzleSolutions {
 }
 
 message Piece {
-  string tetrino_name = 1;
+  string tetromino_name = 1;
   repeated Cell cells = 2;
 }
 

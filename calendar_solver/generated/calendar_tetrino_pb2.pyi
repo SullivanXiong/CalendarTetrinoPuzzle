@@ -1,8 +1,13 @@
-from google.protobuf import timestamp_pb2 as _timestamp_pb2
-from google.protobuf.internal import containers as _containers
+from typing import ClassVar as _ClassVar
+from typing import Iterable as _Iterable
+from typing import Mapping as _Mapping
+from typing import Optional as _Optional
+from typing import Union as _Union
+
 from google.protobuf import descriptor as _descriptor
 from google.protobuf import message as _message
-from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Mapping, Optional as _Optional, Union as _Union
+from google.protobuf import timestamp_pb2 as _timestamp_pb2
+from google.protobuf.internal import containers as _containers
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
@@ -25,12 +30,12 @@ class PuzzleSolutions(_message.Message):
     def __init__(self, solutions: _Optional[_Iterable[_Union[PuzzleSolution, _Mapping]]] = ...) -> None: ...
 
 class Piece(_message.Message):
-    __slots__ = ("tetrino_name", "cells")
-    TETRINO_NAME_FIELD_NUMBER: _ClassVar[int]
+    __slots__ = ("tetromino_name", "cells")
+    tetromino_NAME_FIELD_NUMBER: _ClassVar[int]
     CELLS_FIELD_NUMBER: _ClassVar[int]
-    tetrino_name: str
+    tetromino_name: str
     cells: _containers.RepeatedCompositeFieldContainer[Cell]
-    def __init__(self, tetrino_name: _Optional[str] = ..., cells: _Optional[_Iterable[_Union[Cell, _Mapping]]] = ...) -> None: ...
+    def __init__(self, tetromino_name: _Optional[str] = ..., cells: _Optional[_Iterable[_Union[Cell, _Mapping]]] = ...) -> None: ...
 
 class Cell(_message.Message):
     __slots__ = ("row", "col")

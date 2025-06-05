@@ -1,4 +1,4 @@
-app = "calendar-tetrino-grpc"
+app = "calendar-tetromino-grpc"
 primary_region = "sjc"
 
 [build]

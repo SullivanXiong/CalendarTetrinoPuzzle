@@ -1,6 +1,6 @@
 class InvalidShapeError(Exception):
     """
-    Custom exception for invalid Tetrino shapes.
+    Custom exception for invalid Tetromino shapes.
     """
     def __init__(self, message="Invalid shape dimensions or structure."):
         super().__init__(message)
@@ -25,7 +25,7 @@ class Shape:
 
     def validate(self) -> bool:
         """
-        Validate the Tetrino piece.
+        Validate the Tetromino piece.
         :return: True if valid, False otherwise.
         """
         if len(self.shape) != self.height:
@@ -46,13 +46,13 @@ class Shape:
         return f"Shape(width={self.width}, height={self.height}, shape={self.shape})"
 
 
-class Tetrino:
+class Tetromino:
     """
-    General class for Tetrino pieces.
+    General class for Tetromino pieces.
     """
     def __init__(self, shape: Shape, name: str):
         """
-        Initialize a Tetrino piece.
+        Initialize a Tetromino piece.
         :param shape: A Shape object representing the piece.
         :param name: A string name for the piece (e.g., "L", "T").
         """
@@ -61,7 +61,7 @@ class Tetrino:
 
     def rotate_clockwise(self, degrees: int = 90):
         """
-        Rotate the Tetrino piece by rotating its shape.
+        Rotate the Tetromino piece by rotating its shape.
         """
         if degrees % 90 != 0:
             raise ValueError("Rotation degrees must be a multiple of 90.")
@@ -70,18 +70,18 @@ class Tetrino:
 
     def get_dimensions(self):
         """
-        Get the dimensions of the Tetrino piece.
+        Get the dimensions of the Tetromino piece.
         :return: A tuple (width, height).
         """
         return self.shape.width, self.shape.height
 
     def __repr__(self):
-        return f"Tetrino(name={self.name}, shape={self.shape})" + self._shape()
-    
+        return f"Tetromino(name={self.name}, shape={self.shape})" + self._shape()
+
     def _shape(self):
         """
-        Get the shape of the Tetrino piece.
-        :return: The shape of the Tetrino.
+        Get the shape of the Tetromino piece.
+        :return: The shape of the Tetromino.
         """
         shape_string = ""
         

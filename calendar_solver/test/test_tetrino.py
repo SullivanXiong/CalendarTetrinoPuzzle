@@ -1,203 +1,204 @@
 import unittest
 
-from calendar_solver.calendar_solver.tetrino import InvalidShapeError, Shape, Tetrino
+from CalendarTetrominoPuzzle.calendar_solver.calendar_solver.tetromino import (
+    InvalidShapeError, Shape, tetromino)
 
 
-class TestTetrino(unittest.TestCase):
+class Testtetromino(unittest.TestCase):
     def setUp(self):
         """
-        Set up test data for Tetrino pieces.
+        Set up test data for tetromino pieces.
         """
-        self.tetrinos = {
-            "small_L_tetrino": Tetrino(Shape(2, 3, [[1, 0], [1, 0], [1, 1]]), "sL"),
-            "big_L_tetrino": Tetrino(Shape(2, 4, [[1, 0], [1, 0], [1, 0], [1, 1]]), "bL"),
-            "symmetrical_L_tetrino": Tetrino(Shape(3, 3, [[1, 0, 0], [1, 0, 0], [1, 1, 1]]), "symL"),
-            "lowercase_l_tetrino": Tetrino(Shape(1, 4, [[1], [1], [1], [1]]), "l"),
-            "u_tetrino": Tetrino(Shape(3, 2, [[1, 0, 1], [1, 1, 1]]), "U"),
-            "small_z_tetrino": Tetrino(Shape(3, 2, [[1, 1, 0], [0, 1, 1]]), "sZ"),
-            "big_z_tetrino": Tetrino(Shape(4, 2, [[0, 0, 1, 1], [1, 1, 1, 0]]), "bZ"),
-            "z_tetrino": Tetrino(Shape(3, 3, [[0, 1, 1], [0, 1, 0], [1, 1, 0]]), "Z"),
-            "t_tetrino": Tetrino(Shape(3, 3, [[1, 1, 1], [0, 1, 0], [0, 1, 0]]), "T"),
-            "p_tetrino": Tetrino(Shape(2, 3, [[1, 1], [1, 1], [1, 0]]), "P"),
+        self.tetrominos = {
+            "small_L_tetromino": tetromino(Shape(2, 3, [[1, 0], [1, 0], [1, 1]]), "sL"),
+            "big_L_tetromino": tetromino(Shape(2, 4, [[1, 0], [1, 0], [1, 0], [1, 1]]), "bL"),
+            "symmetrical_L_tetromino": tetromino(Shape(3, 3, [[1, 0, 0], [1, 0, 0], [1, 1, 1]]), "symL"),
+            "lowercase_l_tetromino": tetromino(Shape(1, 4, [[1], [1], [1], [1]]), "l"),
+            "u_tetromino": tetromino(Shape(3, 2, [[1, 0, 1], [1, 1, 1]]), "U"),
+            "small_z_tetromino": tetromino(Shape(3, 2, [[1, 1, 0], [0, 1, 1]]), "sZ"),
+            "big_z_tetromino": tetromino(Shape(4, 2, [[0, 0, 1, 1], [1, 1, 1, 0]]), "bZ"),
+            "z_tetromino": tetromino(Shape(3, 3, [[0, 1, 1], [0, 1, 0], [1, 1, 0]]), "Z"),
+            "t_tetromino": tetromino(Shape(3, 3, [[1, 1, 1], [0, 1, 0], [0, 1, 0]]), "T"),
+            "p_tetromino": tetromino(Shape(2, 3, [[1, 1], [1, 1], [1, 0]]), "P"),
         }
 
     def test_initial_shape(self):
         """
-        Test the initial shape of the Tetrinos.
+        Test the initial shape of the Tetrominos.
         """
-        for name, tetrino in self.tetrinos.items():
-            with self.subTest(tetrino=name):
-                expected_shape = tetrino.shape.shape
-                self.assertEqual(tetrino.shape.shape, expected_shape)
+        for name, tetromino in self.tetrominos.items():
+            with self.subTest(tetromino=name):
+                expected_shape = tetromino.shape.shape
+                self.assertEqual(tetromino.shape.shape, expected_shape)
 
     def test_rotate_90(self):
         """
-        Test rotating the Tetrino 90 degrees clockwise.
+        Test rotating the Tetromino 90 degrees clockwise.
         """
-        self.small_L_tetrino = self.tetrinos["small_L_tetrino"]
-        self.small_L_tetrino.rotate_clockwise(90)
+        self.small_L_tetromino = self.tetrominos["small_L_tetromino"]
+        self.small_L_tetromino.rotate_clockwise(90)
         expected_shape = [[1, 1, 1], [1, 0, 0]]
-        self.assertEqual(self.small_L_tetrino.shape.shape, expected_shape)
-        
-        self.big_L_tetrino = self.tetrinos["big_L_tetrino"]
-        self.big_L_tetrino.rotate_clockwise(90)
+        self.assertEqual(self.small_L_tetromino.shape.shape, expected_shape)
+
+        self.big_L_tetromino = self.tetrominos["big_L_tetromino"]
+        self.big_L_tetromino.rotate_clockwise(90)
         expected_shape = [[1, 1, 1, 1], [1, 0, 0, 0]]
-        self.assertEqual(self.big_L_tetrino.shape.shape, expected_shape)
-        
-        self.symmetrical_L_tetrino = self.tetrinos["symmetrical_L_tetrino"]
-        self.symmetrical_L_tetrino.rotate_clockwise(90)
+        self.assertEqual(self.big_L_tetromino.shape.shape, expected_shape)
+
+        self.symmetrical_L_tetromino = self.tetrominos["symmetrical_L_tetromino"]
+        self.symmetrical_L_tetromino.rotate_clockwise(90)
         expected_shape = [[1, 1, 1], [1, 0, 0], [1, 0, 0]]
-        self.assertEqual(self.symmetrical_L_tetrino.shape.shape, expected_shape)
-        
-        self.lowercase_l_tetrino = self.tetrinos["lowercase_l_tetrino"]
-        self.lowercase_l_tetrino.rotate_clockwise(90)
+        self.assertEqual(self.symmetrical_L_tetromino.shape.shape, expected_shape)
+
+        self.lowercase_l_tetromino = self.tetrominos["lowercase_l_tetromino"]
+        self.lowercase_l_tetromino.rotate_clockwise(90)
         expected_shape = [[1, 1, 1, 1]]
-        self.assertEqual(self.lowercase_l_tetrino.shape.shape, expected_shape)
-        
-        self.u_tetrino = self.tetrinos["u_tetrino"]
-        self.u_tetrino.rotate_clockwise(90)
+        self.assertEqual(self.lowercase_l_tetromino.shape.shape, expected_shape)
+
+        self.u_tetromino = self.tetrominos["u_tetromino"]
+        self.u_tetromino.rotate_clockwise(90)
         expected_shape = [[1, 1], [1, 0], [1, 1]]
-        self.assertEqual(self.u_tetrino.shape.shape, expected_shape)
-        
-        self.small_z_tetrino = self.tetrinos["small_z_tetrino"]
-        self.small_z_tetrino.rotate_clockwise(90)
+        self.assertEqual(self.u_tetromino.shape.shape, expected_shape)
+
+        self.small_z_tetromino = self.tetrominos["small_z_tetromino"]
+        self.small_z_tetromino.rotate_clockwise(90)
         expected_shape = [[0, 1], [1, 1], [1, 0]]
-        self.assertEqual(self.small_z_tetrino.shape.shape, expected_shape)
-        
-        self.big_z_tetrino = self.tetrinos["big_z_tetrino"]
-        self.big_z_tetrino.rotate_clockwise(90)
+        self.assertEqual(self.small_z_tetromino.shape.shape, expected_shape)
+
+        self.big_z_tetromino = self.tetrominos["big_z_tetromino"]
+        self.big_z_tetromino.rotate_clockwise(90)
         expected_shape = [[1, 0], [1, 0], [1, 1], [0, 1]]
-        self.assertEqual(self.big_z_tetrino.shape.shape, expected_shape)
-        
-        self.z_tetrino = self.tetrinos["z_tetrino"]
-        self.z_tetrino.rotate_clockwise(90)
+        self.assertEqual(self.big_z_tetromino.shape.shape, expected_shape)
+
+        self.z_tetromino = self.tetrominos["z_tetromino"]
+        self.z_tetromino.rotate_clockwise(90)
         expected_shape = [[1, 0, 0], [1, 1, 1], [0, 0, 1]]
-        self.assertEqual(self.z_tetrino.shape.shape, expected_shape)
-        
-        self.t_tetrino = self.tetrinos["t_tetrino"]
-        self.t_tetrino.rotate_clockwise(90)
+        self.assertEqual(self.z_tetromino.shape.shape, expected_shape)
+
+        self.t_tetromino = self.tetrominos["t_tetromino"]
+        self.t_tetromino.rotate_clockwise(90)
         expected_shape = [[0, 0, 1], [1, 1, 1], [0, 0, 1]]
-        self.assertEqual(self.t_tetrino.shape.shape, expected_shape)
-        
-        self.p_tetrino = self.tetrinos["p_tetrino"]
-        self.p_tetrino.rotate_clockwise(90)
+        self.assertEqual(self.t_tetromino.shape.shape, expected_shape)
+
+        self.p_tetromino = self.tetrominos["p_tetromino"]
+        self.p_tetromino.rotate_clockwise(90)
         expected_shape = [[1, 1, 1], [0, 1, 1]]
-        self.assertEqual(self.p_tetrino.shape.shape, expected_shape)
+        self.assertEqual(self.p_tetromino.shape.shape, expected_shape)
 
     def test_rotate_180(self):
         """
-        Test rotating the Tetrino 180 degrees clockwise.
+        Test rotating the Tetromino 180 degrees clockwise.
         """
-        self.small_L_tetrino = self.tetrinos["small_L_tetrino"]
-        self.small_L_tetrino.rotate_clockwise(180)
+        self.small_L_tetromino = self.tetrominos["small_L_tetromino"]
+        self.small_L_tetromino.rotate_clockwise(180)
         expected_shape = [[1, 1], [0, 1], [0, 1]]
-        self.assertEqual(self.small_L_tetrino.shape.shape, expected_shape)
-        
-        self.big_L_tetrino = self.tetrinos["big_L_tetrino"]
-        self.big_L_tetrino.rotate_clockwise(180)
+        self.assertEqual(self.small_L_tetromino.shape.shape, expected_shape)
+
+        self.big_L_tetromino = self.tetrominos["big_L_tetromino"]
+        self.big_L_tetromino.rotate_clockwise(180)
         expected_shape = [[1, 1], [0, 1], [0, 1], [0, 1]]
-        self.assertEqual(self.big_L_tetrino.shape.shape, expected_shape)
+        self.assertEqual(self.big_L_tetromino.shape.shape, expected_shape)
         
-        self.symmetrical_L_tetrino = self.tetrinos["symmetrical_L_tetrino"]
-        self.symmetrical_L_tetrino.rotate_clockwise(180)
+        self.symmetrical_L_tetromino = self.tetrominos["symmetrical_L_tetromino"]
+        self.symmetrical_L_tetromino.rotate_clockwise(180)
         expected_shape = [[1, 1, 1], [0, 0, 1], [0, 0, 1]]
-        self.assertEqual(self.symmetrical_L_tetrino.shape.shape, expected_shape)
+        self.assertEqual(self.symmetrical_L_tetromino.shape.shape, expected_shape)
         
-        self.lowercase_l_tetrino = self.tetrinos["lowercase_l_tetrino"]
-        self.lowercase_l_tetrino.rotate_clockwise(180)
+        self.lowercase_l_tetromino = self.tetrominos["lowercase_l_tetromino"]
+        self.lowercase_l_tetromino.rotate_clockwise(180)
         expected_shape = [[1], [1], [1], [1]]
-        self.assertEqual(self.lowercase_l_tetrino.shape.shape, expected_shape)
+        self.assertEqual(self.lowercase_l_tetromino.shape.shape, expected_shape)
         
-        self.u_tetrino = self.tetrinos["u_tetrino"]
-        self.u_tetrino.rotate_clockwise(180)
+        self.u_tetromino = self.tetrominos["u_tetromino"]
+        self.u_tetromino.rotate_clockwise(180)
         expected_shape = [[1, 1, 1], [1, 0, 1]]
-        self.assertEqual(self.u_tetrino.shape.shape, expected_shape)
+        self.assertEqual(self.u_tetromino.shape.shape, expected_shape)
         
-        self.small_z_tetrino = self.tetrinos["small_z_tetrino"]
-        self.small_z_tetrino.rotate_clockwise(180)
+        self.small_z_tetromino = self.tetrominos["small_z_tetromino"]
+        self.small_z_tetromino.rotate_clockwise(180)
         expected_shape = [[1, 1, 0], [0, 1, 1]]
-        self.assertEqual(self.small_z_tetrino.shape.shape, expected_shape)
+        self.assertEqual(self.small_z_tetromino.shape.shape, expected_shape)
         
-        self.big_z_tetrino = self.tetrinos["big_z_tetrino"]
-        self.big_z_tetrino.rotate_clockwise(180)
+        self.big_z_tetromino = self.tetrominos["big_z_tetromino"]
+        self.big_z_tetromino.rotate_clockwise(180)
         expected_shape = [[0, 1, 1, 1], [1, 1, 0, 0]]
-        self.assertEqual(self.big_z_tetrino.shape.shape, expected_shape)
+        self.assertEqual(self.big_z_tetromino.shape.shape, expected_shape)
         
-        self.z_tetrino = self.tetrinos["z_tetrino"]
-        self.z_tetrino.rotate_clockwise(180)
+        self.z_tetromino = self.tetrominos["z_tetromino"]
+        self.z_tetromino.rotate_clockwise(180)
         expected_shape = [[0, 1, 1], [0, 1, 0], [1, 1, 0]]
-        self.assertEqual(self.z_tetrino.shape.shape, expected_shape)
+        self.assertEqual(self.z_tetromino.shape.shape, expected_shape)
         
-        self.t_tetrino = self.tetrinos["t_tetrino"]
-        self.t_tetrino.rotate_clockwise(180)
+        self.t_tetromino = self.tetrominos["t_tetromino"]
+        self.t_tetromino.rotate_clockwise(180)
         expected_shape = [[0, 1, 0], [0, 1, 0], [1, 1, 1]]
-        self.assertEqual(self.t_tetrino.shape.shape, expected_shape)
+        self.assertEqual(self.t_tetromino.shape.shape, expected_shape)
         
-        self.p_tetrino = self.tetrinos["p_tetrino"]
-        self.p_tetrino.rotate_clockwise(180)
+        self.p_tetromino = self.tetrominos["p_tetromino"]
+        self.p_tetromino.rotate_clockwise(180)
         expected_shape = [[0, 1], [1, 1], [1, 1]]
-        self.assertEqual(self.p_tetrino.shape.shape, expected_shape)
+        self.assertEqual(self.p_tetromino.shape.shape, expected_shape)
 
     def test_rotate_360(self):
         """
-        Test rotating the Tetrino 360 degrees clockwise (full rotation).
+        Test rotating the tetromino 360 degrees clockwise (full rotation).
         """
-        self.small_L_tetrino = self.tetrinos["small_L_tetrino"]
-        self.small_L_tetrino.rotate_clockwise(360)
+        self.small_L_tetromino = self.tetrominos["small_L_tetromino"]
+        self.small_L_tetromino.rotate_clockwise(360)
         expected_shape = [[1, 0], [1, 0], [1, 1]]  # Should return to the original shape
-        self.assertEqual(self.small_L_tetrino.shape.shape, expected_shape)
+        self.assertEqual(self.small_L_tetromino.shape.shape, expected_shape)
         
-        self.big_L_tetrino = self.tetrinos["big_L_tetrino"]
-        self.big_L_tetrino.rotate_clockwise(360)
+        self.big_L_tetromino = self.tetrominos["big_L_tetromino"]
+        self.big_L_tetromino.rotate_clockwise(360)
         expected_shape = [[1, 0], [1, 0], [1, 0], [1, 1]]
-        self.assertEqual(self.big_L_tetrino.shape.shape, expected_shape)
+        self.assertEqual(self.big_L_tetromino.shape.shape, expected_shape)
         
-        self.symmetrical_L_tetrino = self.tetrinos["symmetrical_L_tetrino"]
-        self.symmetrical_L_tetrino.rotate_clockwise(360)
+        self.symmetrical_L_tetromino = self.tetrominos["symmetrical_L_tetromino"]
+        self.symmetrical_L_tetromino.rotate_clockwise(360)
         expected_shape = [[1, 0, 0], [1, 0, 0], [1, 1, 1]]
-        self.assertEqual(self.symmetrical_L_tetrino.shape.shape, expected_shape)
+        self.assertEqual(self.symmetrical_L_tetromino.shape.shape, expected_shape)
         
-        self.lowercase_l_tetrino = self.tetrinos["lowercase_l_tetrino"]
-        self.lowercase_l_tetrino.rotate_clockwise(360)
+        self.lowercase_l_tetromino = self.tetrominos["lowercase_l_tetromino"]
+        self.lowercase_l_tetromino.rotate_clockwise(360)
         expected_shape = [[1], [1], [1], [1]]
-        self.assertEqual(self.lowercase_l_tetrino.shape.shape, expected_shape)
+        self.assertEqual(self.lowercase_l_tetromino.shape.shape, expected_shape)
         
-        self.u_tetrino = self.tetrinos["u_tetrino"]
-        self.u_tetrino.rotate_clockwise(360)
+        self.u_tetromino = self.tetrominos["u_tetromino"]
+        self.u_tetromino.rotate_clockwise(360)
         expected_shape = [[1, 0, 1], [1, 1, 1]]
-        self.assertEqual(self.u_tetrino.shape.shape, expected_shape)
+        self.assertEqual(self.u_tetromino.shape.shape, expected_shape)
         
-        self.small_z_tetrino = self.tetrinos["small_z_tetrino"]
-        self.small_z_tetrino.rotate_clockwise(360)
+        self.small_z_tetromino = self.tetrominos["small_z_tetromino"]
+        self.small_z_tetromino.rotate_clockwise(360)
         expected_shape = [[1, 1, 0], [0, 1, 1]]
-        self.assertEqual(self.small_z_tetrino.shape.shape, expected_shape)
+        self.assertEqual(self.small_z_tetromino.shape.shape, expected_shape)
         
-        self.big_z_tetrino = self.tetrinos["big_z_tetrino"]
-        self.big_z_tetrino.rotate_clockwise(360)
+        self.big_z_tetromino = self.tetrominos["big_z_tetromino"]
+        self.big_z_tetromino.rotate_clockwise(360)
         expected_shape = [[0, 0, 1, 1], [1, 1, 1, 0]]
-        self.assertEqual(self.big_z_tetrino.shape.shape, expected_shape)
+        self.assertEqual(self.big_z_tetromino.shape.shape, expected_shape)
         
-        self.z_tetrino = self.tetrinos["z_tetrino"]
-        self.z_tetrino.rotate_clockwise(360)
+        self.z_tetromino = self.tetrominos["z_tetromino"]
+        self.z_tetromino.rotate_clockwise(360)
         expected_shape = [[0, 1, 1], [0, 1, 0], [1, 1, 0]]
-        self.assertEqual(self.z_tetrino.shape.shape, expected_shape)
+        self.assertEqual(self.z_tetromino.shape.shape, expected_shape)
         
-        self.t_tetrino = self.tetrinos["t_tetrino"]
-        self.t_tetrino.rotate_clockwise(360)
+        self.t_tetromino = self.tetrominos["t_tetromino"]
+        self.t_tetromino.rotate_clockwise(360)
         expected_shape = [[1, 1, 1], [0, 1, 0], [0, 1, 0]]
-        self.assertEqual(self.t_tetrino.shape.shape, expected_shape)
+        self.assertEqual(self.t_tetromino.shape.shape, expected_shape)
         
-        self.p_tetrino = self.tetrinos["p_tetrino"]
-        self.p_tetrino.rotate_clockwise(360)
+        self.p_tetromino = self.tetrominos["p_tetromino"]
+        self.p_tetromino.rotate_clockwise(360)
         expected_shape = [[1, 1], [1, 1], [1, 0]]
-        self.assertEqual(self.p_tetrino.shape.shape, expected_shape)
+        self.assertEqual(self.p_tetromino.shape.shape, expected_shape)
         
     def test_invalid_shape(self):
         """
         Test that an invalid shape raises an InvalidShapeError.
         """
         with self.assertRaises(InvalidShapeError):
-            Tetrino(Shape(2, 3, [[1, 0], [1, 0]]), "Invalid")
+            tetromino(Shape(2, 3, [[1, 0], [1, 0]]), "Invalid")
 
 
 if __name__ == "__main__":

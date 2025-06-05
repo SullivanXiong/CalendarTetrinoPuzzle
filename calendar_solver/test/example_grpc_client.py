@@ -1,14 +1,14 @@
 from datetime import datetime, timezone
 
+import calendar_solver.generated.calendar_tetromino_pb2 as calendar_tetromino_pb2
+import calendar_solver.generated.calendar_tetromino_pb2_grpc as calendar_tetromino_pb2_grpc
 import grpc
-import calendar_solver.generated.calendar_tetrino_pb2 as calendar_tetrino_pb2
-import calendar_solver.generated.calendar_tetrino_pb2_grpc as calendar_tetrino_pb2_grpc
 from google.protobuf.timestamp_pb2 import Timestamp
 
 
 def run():
     channel = grpc.insecure_channel("localhost:50051")
-    stub = calendar_tetrino_pb2_grpc.TetrinoSolverStub(channel)
+    stub = calendar_tetromino_pb2_grpc.tetrominoSolverStub(channel)
 
     # Create a Timestamp for today's date
     now = datetime.now(timezone.utc)
@@ -16,7 +16,7 @@ def run():
     timestamp.FromDatetime(now)
 
     # Prepare request
-    request = calendar_tetrino_pb2.PuzzleRequest(date=timestamp)
+    request = calendar_tetromino_pb2.PuzzleRequest(date=timestamp)
 
     # Call SolvePuzzle
     response = stub.SolvePuzzle(request)
@@ -34,7 +34,7 @@ def run():
 
 def print_piece(piece):
     cell_list = [(cell.row, cell.col) for cell in piece.cells]
-    print(f"{piece.tetrino_name}:  @ {cell_list}")
+    print(f"{piece.tetromino_name}:  @ {cell_list}")
 
 if __name__ == "__main__":
     run()

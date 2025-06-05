@@ -1,3 +1,3 @@
-import generated.calendar_tetrino_pb2 as calendar_tetrino_pb2
+import generated.calendar_tetromino_pb2 as calendar_tetromino_pb2
 
-print(calendar_tetrino_pb2)
+print(calendar_tetromino_pb2)

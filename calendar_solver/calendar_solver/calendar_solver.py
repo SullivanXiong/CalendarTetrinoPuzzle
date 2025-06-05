@@ -1,8 +1,7 @@
 import copy
 
 import dlx
-
-from calendar_solver.calendar_solver.tetrino import Shape, Tetrino
+from calendar_solver.calendar_solver.tetromino import Shape, Tetromino
 from calendar_solver.calendar_solver.util import (DayOfWeek, Month,
                                                   get_calender_order,
                                                   get_today)
@@ -59,10 +58,10 @@ class CalenderSolver():
 
         self.calender_grid = CalenderGrid()
         self._init_empty_cells(month, day, day_of_week)
-        self._init_tetrinos()
+        self._init_tetrominos()
 
-        self._build_dlx_columns(self.calender_grid, self.empty_cells, self.tetrinos.keys())
-        self._build_dlx_rows(self.tetrinos, self.calender_grid, self.empty_cells)
+        self._build_dlx_columns(self.calender_grid, self.empty_cells, self.tetrominos.keys())
+        self._build_dlx_rows(self.tetrominos, self.calender_grid, self.empty_cells)
 
     def is_leap_year(self, year: int) -> bool:
         """Check if a year is a leap year.
@@ -72,21 +71,21 @@ class CalenderSolver():
         """
         return (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0)
     
-    def _init_tetrinos(self):
-        """ Initialize the tetrinos with their shapes and names.
+    def _init_tetrominos(self):
+        """ Initialize the tetrominos with their shapes and names.
             INTERNAL USE ONLY.
         """
-        self.tetrinos = {
-            "small_L_tetrino": Tetrino(Shape(2, 3, [[1, 0], [1, 0], [1, 1]]), "sL"),
-            "big_L_tetrino": Tetrino(Shape(2, 4, [[1, 0], [1, 0], [1, 0], [1, 1]]), "bL"),
-            "symmetrical_L_tetrino": Tetrino(Shape(3, 3, [[1, 0, 0], [1, 0, 0], [1, 1, 1]]), "symL"),
-            "lowercase_l_tetrino": Tetrino(Shape(1, 4, [[1], [1], [1], [1]]), "l"),
-            "u_tetrino": Tetrino(Shape(3, 2, [[1, 0, 1], [1, 1, 1]]), "U"),
-            "small_z_tetrino": Tetrino(Shape(3, 2, [[1, 1, 0], [0, 1, 1]]), "sZ"),
-            "big_z_tetrino": Tetrino(Shape(4, 2, [[0, 0, 1, 1], [1, 1, 1, 0]]), "bZ"),
-            "z_tetrino": Tetrino(Shape(3, 3, [[0, 1, 1], [0, 1, 0], [1, 1, 0]]), "Z"),
-            "t_tetrino": Tetrino(Shape(3, 3, [[1, 1, 1], [0, 1, 0], [0, 1, 0]]), "T"),
-            "p_tetrino": Tetrino(Shape(2, 3, [[1, 1], [1, 1], [1, 0]]), "P"),
+        self.tetrominos = {
+            "small_L_tetromino": Tetromino(Shape(2, 3, [[1, 0], [1, 0], [1, 1]]), "sL"),
+            "big_L_tetromino": Tetromino(Shape(2, 4, [[1, 0], [1, 0], [1, 0], [1, 1]]), "bL"),
+            "symmetrical_L_tetromino": Tetromino(Shape(3, 3, [[1, 0, 0], [1, 0, 0], [1, 1, 1]]), "symL"),
+            "lowercase_l_tetromino": Tetromino(Shape(1, 4, [[1], [1], [1], [1]]), "l"),
+            "u_tetromino": Tetromino(Shape(3, 2, [[1, 0, 1], [1, 1, 1]]), "U"),
+            "small_z_tetromino": Tetromino(Shape(3, 2, [[1, 1, 0], [0, 1, 1]]), "sZ"),
+            "big_z_tetromino": Tetromino(Shape(4, 2, [[0, 0, 1, 1], [1, 1, 1, 0]]), "bZ"),
+            "z_tetromino": Tetromino(Shape(3, 3, [[0, 1, 1], [0, 1, 0], [1, 1, 0]]), "Z"),
+            "t_tetromino": Tetromino(Shape(3, 3, [[1, 1, 1], [0, 1, 0], [0, 1, 0]]), "T"),
+            "p_tetromino": Tetromino(Shape(2, 3, [[1, 1], [1, 1], [1, 0]]), "P"),
         }
 
     
@@ -105,13 +104,13 @@ class CalenderSolver():
             self.calender_grid.grid_values[day_of_week.name]
         ]
     
-    def _build_dlx_columns(self, grid, empty_cells, tetrino_keys):
+    def _build_dlx_columns(self, grid, empty_cells, tetromino_keys):
         """ Build the columns for the DLX algorithm.
             INTERNAL USE ONLY.
             
             :param grid: The grid to use.
             :param empty_cells: The empty cells in the grid.
-            :param tetrino_keys: The keys of the tetrinos to use.
+            :param tetromino_keys: The keys of the tetrominos to use.
         """
         self.columns = []
 
@@ -123,30 +122,30 @@ class CalenderSolver():
                 if (i, j) in empty_cells:
                     self.columns.append((f"cell_{i}_{j}", dlx.DLX.SECONDARY))
                     
-        # Add one column for each tetrino
-        for name in tetrino_keys:
+        # Add one column for each tetromino
+        for name in tetromino_keys:
             self.columns.append((f"piece_{name}", dlx.DLX.PRIMARY))
             
         # index the cells and the pieces to an indexable metadata format
         self.col_index = {col[0]: idx for idx, col in enumerate(self.columns)}
             
-    def _build_dlx_rows(self, tetrinos, grid, empty_cells):
+    def _build_dlx_rows(self, tetrominos, grid, empty_cells):
         """ Build the rows for the DLX algorithm.
             INTERNAL USE ONLY.
             
-            :param tetrinos: The tetrinos to use.
+            :param tetrominos: The tetrominos to use.
             :param grid: The grid to use.
             :param empty_cells: The empty cells in the grid.
         """
         self.rows = []
         self.row_metadata = []
         
-        for name, tetrino in tetrinos.items():
+        for name, tetromino in tetrominos.items():
             for rotation in range(4):
-                rotated_tetrino = copy.deepcopy(tetrino)
-                rotated_tetrino.rotate_clockwise(90 * rotation)
+                rotated_tetromino = copy.deepcopy(tetromino)
+                rotated_tetromino.rotate_clockwise(90 * rotation)
 
-                shape_matrix = rotated_tetrino.shape.shape
+                shape_matrix = rotated_tetromino.shape.shape
                 expected_cells = sum(cell for row in shape_matrix for cell in row)
                     
                 # print(f"[DEBUG] {name} rotation {rotation}: {shape_matrix}")
@@ -173,7 +172,7 @@ class CalenderSolver():
                                 break
 
                         if valid and len(cells) == expected_cells:                            
-                            # A possible iteration of the tetrino in an
+                            # A possible iteration of the tetromino in an
                             # indexed Intermediate Representation form 
                             dlx_row = [self.col_index[f"piece_{name}"]] + \
                                 [self.col_index[f"cell_{r}_{c}"] for (r,c) in \
@@ -231,8 +230,8 @@ class CalenderSolver():
             
             for col in row:
                 if col.startswith("piece_"):
-                    piece = col.replace("piece_", "")  # e.g., 'piece_tetrino' -> 'tetrino'
-                    piece = self.tetrinos[piece].name
+                    piece = col.replace("piece_", "")  # e.g., 'piece_tetromino' -> 'tetromino'
+                    piece = self.tetrominos[piece].name
                 elif col.startswith("cell_"):
                     _, r, c = col.split("_")
                     r = int(r)

@@ -1,17 +1,16 @@
 import json
 from concurrent import futures
 
+import calendar_solver.generated.calendar_tetromino_pb2 as calendar_tetromino_pb2
+import calendar_solver.generated.calendar_tetromino_pb2_grpc as calendar_tetromino_pb2_grpc
 import grpc
-
-import calendar_solver.generated.calendar_tetrino_pb2 as calendar_tetrino_pb2
-import calendar_solver.generated.calendar_tetrino_pb2_grpc as calendar_tetrino_pb2_grpc
 from calendar_solver.calendar_solver.calendar_solver import \
     CalenderSolver  # your logic here
 from calendar_solver.calendar_solver.util import (format_day_of_week,
                                                   format_month)
 
 
-class TetrinoSolverServicer(calendar_tetrino_pb2_grpc.TetrinoSolverServicer):
+class tetrominoSolverServicer(calendar_tetromino_pb2_grpc.tetrominoSolverServicer):
     def SolvePuzzle(self, request, context):
         date = request.date.ToDatetime()  # Convert protobuf Timestamp to datetime.datetime
 
@@ -31,7 +30,7 @@ class TetrinoSolverServicer(calendar_tetrino_pb2_grpc.TetrinoSolverServicer):
         for solution in all_solutions:
             solutions.append(self._build_placement(solution))
         
-        return calendar_tetrino_pb2.PuzzleSolutions(
+        return calendar_tetromino_pb2.PuzzleSolutions(
             solutions=solutions
         )
 
@@ -47,19 +46,19 @@ class TetrinoSolverServicer(calendar_tetrino_pb2_grpc.TetrinoSolverServicer):
                     transformed_solution[piece_name] = []
                 else:
                     row, col = map(int, item.split("_")[1:])
-                    cells.append(calendar_tetrino_pb2.Cell(row=str(row), col=str(col)))
+                    cells.append(calendar_tetromino_pb2.Cell(row=str(row), col=str(col)))
                     
-            piece = calendar_tetrino_pb2.Piece(
-                tetrino_name=piece_name,
+            piece = calendar_tetromino_pb2.Piece(
+                tetromino_name=piece_name,
                 cells=cells
             )
             pieces.append(piece)
             
-        return calendar_tetrino_pb2.PuzzleSolution(solution_pieces=pieces)
+        return calendar_tetromino_pb2.PuzzleSolution(solution_pieces=pieces)
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    calendar_tetrino_pb2_grpc.add_TetrinoSolverServicer_to_server(TetrinoSolverServicer(), server)
+    calendar_tetromino_pb2_grpc.add_tetrominoSolverServicer_to_server(tetrominoSolverServicer(), server)
     server.add_insecure_port("[::]:50051")
     print("🟢 gRPC server listening at [::]:50051")
     server.start()

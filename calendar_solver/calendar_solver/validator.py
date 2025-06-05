@@ -3,8 +3,10 @@ from copy import deepcopy
 
 import dlx
 import pandas as pd
-from calendar_solver.calendar_solver.tetrino import Shape, Tetrino
 from calendar_solver.calendar_solver.util import get_calender_order
+
+from CalendarTetrominoPuzzle.calendar_solver.calendar_solver.tetromino import (
+    Shape, tetromino)
 
 # Define the grid size and cutouts
 rows, cols = 8, 7
@@ -31,7 +33,7 @@ print("Reserved cells:", reserved)
 
 unusable = cutouts | reserved
 
-# Define tetrino shapes (updated to match physical puzzle)
+# Define tetromino shapes (updated to match physical puzzle)
 shapes = {
     "T": Shape(3, 3, [[1, 1, 1], [0, 1, 0], [0, 1, 0]]),
     "sL": Shape(2, 3, [[1, 0], [1, 0], [1, 1]]),
@@ -58,7 +60,7 @@ rot = {
     "l": 1
 }
 
-tetrinos = {name: Tetrino(shape, name) for name, shape in shapes.items()}
+tetrominos = {name: tetromino(shape, name) for name, shape in shapes.items()}
 
 # Manual layout from physical solution
 manual_layout = {
@@ -75,7 +77,7 @@ manual_layout = {
 }
 
 # Convert manual layout into DLX rows and solve
-columns = [("cell", (r, c)) for r in range(rows) for c in range(cols) if (r, c) not in unusable] + [("piece", name) for name in tetrinos]
+columns = [("cell", (r, c)) for r in range(rows) for c in range(cols) if (r, c) not in unusable] + [("piece", name) for name in tetrominos]
 col_index = {col: i for i, col in enumerate(columns)}
 
 print("[DEBUG] Column index mapping:", col_index)
