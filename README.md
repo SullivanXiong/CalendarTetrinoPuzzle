@@ -1,6 +1,6 @@
-# CalenderTetrinoPuzzle
+# CalenderTetrominoPuzzle
 
-A solver for my calender tetrino puzzle
+A solver for my calender Tetromino puzzle
 
 # Setup
 
