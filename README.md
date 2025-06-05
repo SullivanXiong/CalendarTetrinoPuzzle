@@ -1,10 +1,6 @@
 # CalenderTetrominoPuzzle
 
-<<<<<<< HEAD
 A solver for my calender Tetromino puzzle
-=======
-A solver for my calender tetromino puzzle
->>>>>>> 3d639f6 (updated tetrino to tetromino)
 
 # Setup
 
