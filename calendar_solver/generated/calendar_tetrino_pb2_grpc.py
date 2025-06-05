@@ -25,7 +25,7 @@ if _version_not_supported:
     )
 
 
-class tetrominoSolverStub(object):
+class TetrominoSolverStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -46,7 +46,7 @@ class tetrominoSolverStub(object):
                 _registered_method=True)
 
 
-class tetrominoSolverServicer(object):
+class TetrominoSolverServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def SolvePuzzle(self, request, context):
@@ -62,7 +62,7 @@ class tetrominoSolverServicer(object):
         raise NotImplementedError('Method not implemented!')
 
 
-def add_tetrominoSolverServicer_to_server(servicer, server):
+def add_TetrominoSolverServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'SolvePuzzle': grpc.unary_unary_rpc_method_handler(
                     servicer.SolvePuzzle,
@@ -82,7 +82,7 @@ def add_tetrominoSolverServicer_to_server(servicer, server):
 
 
  # This class is part of an EXPERIMENTAL API.
-class tetrominoSolver(object):
+class TetrominoSolver(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod

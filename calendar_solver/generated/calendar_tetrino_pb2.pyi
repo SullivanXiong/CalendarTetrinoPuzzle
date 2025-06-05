@@ -31,7 +31,7 @@ class PuzzleSolutions(_message.Message):
 
 class Piece(_message.Message):
     __slots__ = ("tetromino_name", "cells")
-    tetromino_NAME_FIELD_NUMBER: _ClassVar[int]
+    TETROMINO_NAME_FIELD_NUMBER: _ClassVar[int]
     CELLS_FIELD_NUMBER: _ClassVar[int]
     tetromino_name: str
     cells: _containers.RepeatedCompositeFieldContainer[Cell]

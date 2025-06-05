@@ -3,7 +3,7 @@ syntax = "proto3";
 import "google/protobuf/timestamp.proto";
 package calendartetromino;
 
-service tetrominoSolver {
+service TetrominoSolver {
   rpc SolvePuzzle (PuzzleRequest) returns (PuzzleSolution);
   rpc SolvePuzzleAllSolutions (PuzzleRequest) returns (PuzzleSolutions);
 }

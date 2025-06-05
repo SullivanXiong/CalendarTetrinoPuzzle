@@ -8,7 +8,7 @@ from google.protobuf.timestamp_pb2 import Timestamp
 
 def run():
     channel = grpc.insecure_channel("localhost:50051")
-    stub = calendar_tetromino_pb2_grpc.tetrominoSolverStub(channel)
+    stub = calendar_tetromino_pb2_grpc.TetrominoSolverStub(channel)
 
     # Create a Timestamp for today's date
     now = datetime.now(timezone.utc)

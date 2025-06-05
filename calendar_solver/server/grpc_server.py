@@ -10,7 +10,7 @@ from calendar_solver.calendar_solver.util import (format_day_of_week,
                                                   format_month)
 
 
-class tetrominoSolverServicer(calendar_tetromino_pb2_grpc.tetrominoSolverServicer):
+class TetrominoSolverServicer(calendar_tetromino_pb2_grpc.TetrominoSolverServicer):
     def SolvePuzzle(self, request, context):
         date = request.date.ToDatetime()  # Convert protobuf Timestamp to datetime.datetime
 
@@ -58,7 +58,7 @@ class tetrominoSolverServicer(calendar_tetromino_pb2_grpc.tetrominoSolverService
 
 def serve():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
-    calendar_tetromino_pb2_grpc.add_tetrominoSolverServicer_to_server(tetrominoSolverServicer(), server)
+    calendar_tetromino_pb2_grpc.add_TetrominoSolverServicer_to_server(TetrominoSolverServicer(), server)
     server.add_insecure_port("[::]:50051")
     print("🟢 gRPC server listening at [::]:50051")
     server.start()
