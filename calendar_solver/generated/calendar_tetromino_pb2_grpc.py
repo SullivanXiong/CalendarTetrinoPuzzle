@@ -35,12 +35,12 @@ class TetrominoSolverStub(object):
             channel: A grpc.Channel.
         """
         self.SolvePuzzle = channel.unary_unary(
-                '/calendartetromino.tetrominoSolver/SolvePuzzle',
+                '/calendartetromino.TetrominoSolver/SolvePuzzle',
                 request_serializer=calendar__tetromino__pb2.PuzzleRequest.SerializeToString,
                 response_deserializer=calendar__tetromino__pb2.PuzzleSolution.FromString,
                 _registered_method=True)
         self.SolvePuzzleAllSolutions = channel.unary_unary(
-                '/calendartetromino.tetrominoSolver/SolvePuzzleAllSolutions',
+                '/calendartetromino.TetrominoSolver/SolvePuzzleAllSolutions',
                 request_serializer=calendar__tetromino__pb2.PuzzleRequest.SerializeToString,
                 response_deserializer=calendar__tetromino__pb2.PuzzleSolutions.FromString,
                 _registered_method=True)
@@ -76,9 +76,9 @@ def add_TetrominoSolverServicer_to_server(servicer, server):
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'calendartetromino.tetrominoSolver', rpc_method_handlers)
+            'calendartetromino.TetrominoSolver', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('calendartetromino.tetrominoSolver', rpc_method_handlers)
+    server.add_registered_method_handlers('calendartetromino.TetrominoSolver', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -99,7 +99,7 @@ class TetrominoSolver(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/calendartetromino.tetrominoSolver/SolvePuzzle',
+            '/calendartetromino.TetrominoSolver/SolvePuzzle',
             calendar__tetromino__pb2.PuzzleRequest.SerializeToString,
             calendar__tetromino__pb2.PuzzleSolution.FromString,
             options,
@@ -126,7 +126,7 @@ class TetrominoSolver(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/calendartetromino.tetrominoSolver/SolvePuzzleAllSolutions',
+            '/calendartetromino.TetrominoSolver/SolvePuzzleAllSolutions',
             calendar__tetromino__pb2.PuzzleRequest.SerializeToString,
             calendar__tetromino__pb2.PuzzleSolutions.FromString,
             options,
